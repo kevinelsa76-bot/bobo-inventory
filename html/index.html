@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bobo-inventory</title>
+
+    <!-- Font Awesome pour les icônes (fa-hat-cowboy, fa-shirt, etc.) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+    <!-- =============================================================
+         CONTENEUR PRINCIPAL
+         app.js fait : document.getElementById('app')
+         Il est caché au démarrage (.hidden) et affiché à l'ouverture.
+    ============================================================== -->
+    <div id="app" class="hidden">
+
+        <!-- Logo central en haut -->
+        <div class="top-logo">
+            <span class="logo-bolt">⚡</span>
+            <span>BOBO</span>
+        </div>
+
+        <!-- ===== 3 COLONNES : Inventaire | Personnage | Sol ===== -->
+        <div class="inv-wrapper">
+
+            <!-- ---------- COLONNE GAUCHE : INVENTAIRE JOUEUR ---------- -->
+            <div class="panel">
+                <div class="panel-head">
+                    <div class="head-left">
+                        <div class="head-icon"><i class="fa-solid fa-briefcase"></i></div>
+                        <span class="panel-title">Inventaire</span>
+                    </div>
+                    <span class="weight-text" id="weight-text">0.0 / 120 kg</span>
+                </div>
+
+                <!-- Barre de poids -->
+                <div class="weight-bar" style="width:100%;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:16px;overflow:hidden;">
+                    <div id="weight-fill" style="height:100%;width:0%;background:var(--theme-color);box-shadow:0 0 8px var(--theme-glow);transition:width .2s;"></div>
+                </div>
+
+                <!-- ===== CASES ARGENT ===== -->
+                <div class="money-row">
+                    <div class="money-box cash">
+                        <div class="money-ico"><i class="fa-solid fa-money-bill-wave"></i></div>
+                        <div class="money-info">
+                            <span class="money-label">Argent</span>
+                            <span class="money-amount" id="cash-amount">$0</span>
+                        </div>
+                    </div>
+                    <div class="money-box dirty">
+                        <div class="money-ico"><i class="fa-solid fa-sack-dollar"></i></div>
+                        <div class="money-info">
+                            <span class="money-label">Argent sale</span>
+                            <span class="money-amount" id="dirty-amount">$0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recherche -->
+                <div class="search-row">
+                    <input type="text" id="player-search" class="search-input" placeholder="Rechercher un objet...">
+                    <i class="fa-solid fa-magnifying-glass search-ico"></i>
+                </div>
+
+                <!-- Grille : app.js remplit #player-grid -->
+                <div class="grid" id="player-grid"></div>
+            </div>
+
+            <!-- ---------- COLONNE CENTRALE : PERSONNAGE / VÊTEMENTS ---------- -->
+            <div class="center-panel">
+                <div class="panel-head center-head">
+                    <span class="panel-title">Équipement</span>
+                </div>
+
+                <!-- Slots d'équipement (remplis par app.js si tu ajoutes le rendu ;
+                     laissés statiques ici pour l'affichage de base) -->
+                <div class="clothing-grid" id="equipment-grid"></div>
+
+                <div class="center-actions">
+                    <button class="action-btn circle-btn" id="btn-give"><i class="fa-solid fa-hand-holding"></i></button>
+                    <button class="action-btn active-btn" id="btn-use"><i class="fa-solid fa-hand-pointer"></i> Utiliser</button>
+                    <button class="action-btn circle-btn" id="btn-drop"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+
+            <!-- ---------- COLONNE DROITE : SOL / COFFRE ---------- -->
+            <div class="panel">
+                <div class="panel-head">
+                    <div class="head-left">
+                        <div class="head-icon"><i class="fa-solid fa-box-open"></i></div>
+                        <span class="panel-title">Sol</span>
+                    </div>
+                    <span class="weight-text" id="ground-weight-text"></span>
+                </div>
+
+                <div class="search-row">
+                    <input type="text" id="ground-search" class="search-input" placeholder="Rechercher...">
+                    <i class="fa-solid fa-magnifying-glass search-ico"></i>
+                </div>
+
+                <div class="grid" id="ground-grid"></div>
+            </div>
+
+        </div>
+
+        <!-- Zone de tips en bas -->
+        <div class="footer-container">
+            <div class="tips-box">
+                Glissez-déposez pour déplacer • Clic droit pour utiliser • TAB pour fermer
+            </div>
+        </div>
+
+        <!-- ===== TOOLTIP (infobulle) : app.js remplit tt-name / tt-desc / tt-weight ===== -->
+        <div id="tooltip" class="tooltip hidden">
+            <div class="tt-name" id="tt-name"></div>
+            <div class="tt-desc" id="tt-desc"></div>
+            <div class="tt-weight" id="tt-weight"></div>
+        </div>
+
+    </div>
+
+    <!-- BOUTON TENUE — au-dessus de la hotbar, visible uniquement inventaire ouvert -->
+    <div id="outfit-bar" class="outfit-bar hidden">
+        <button id="btn-strip-clothes" class="outfit-btn">
+            <i class="fa-solid fa-shirt" id="outfit-icon"></i>
+            <span id="outfit-label">TENUE</span>
+        </button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

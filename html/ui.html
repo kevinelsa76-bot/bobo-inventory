@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+
+        <div class="inv-wrapper">
+
+            <!-- ===== INVENTAIRE JOUEUR (gauche) ===== -->
+            <section class="panel player-panel">
+                <header class="panel-head">
+                    <div class="head-left">
+                        <div class="head-icon"><i class="fa-solid fa-user"></i></div>
+                        <span class="panel-title">Inventaire</span>
+                    </div>
+                    <span id="weight-text" class="weight-text">11.4 / 50 kg</span>
+                </header>
+
+                <!-- ===== CASES ARGENT ===== -->
+                <div class="money-row">
+                    <div class="money-box cash">
+                        <div class="money-ico"><i class="fa-solid fa-money-bill-wave"></i></div>
+                        <div class="money-info">
+                            <span class="money-label">Argent</span>
+                            <span class="money-amount" id="cash-amount">$0</span>
+                        </div>
+                    </div>
+                    <div class="money-box dirty">
+                        <div class="money-ico"><i class="fa-solid fa-sack-dollar"></i></div>
+                        <div class="money-info">
+                            <span class="money-label">Argent sale</span>
+                            <span class="money-amount" id="dirty-amount">$0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search-row">
+                    <input id="player-search" class="search-input" type="text" placeholder="Rechercher" spellcheck="false">
+                    <i class="fa-solid fa-magnifying-glass search-ico"></i>
+                </div>
+                <div id="player-grid" class="grid">
+                    <!-- Les cases d'inventaire seront générées ici par le JS -->
+                </div>
+            </section>
+
+            <!-- ===== ZONE VÊTEMENTS (centre) ===== -->
+            <section class="center-panel">
+                <header class="panel-head center-head">
+                    <span class="panel-title bobo-title">BOBO</span>
+                </header>
+                
+                <!-- Conteneur principal de la grille de vêtements -->
+                <div id="equip-list" class="clothing-grid">
+                    <button id="btn-strip-mask" class="outfit-btn outfit-btn-sm">
+                        <i class="fa-solid fa-masks-theater" id="mask-icon"></i>
+                        <span id="mask-label">MASQUE</span>
+                    </button>
+                    <button id="btn-strip-clothes" class="outfit-btn outfit-btn-sm">
+                        <i class="fa-solid fa-shirt" id="outfit-icon"></i>
+                        <span id="outfit-label">TENUE</span>
+                    </button>
+                    <div class="equip-slot armor-slot" id="armor-slot" data-slot="2">
+                        <div class="equip-icon"><i class="fa-solid fa-vest"></i></div>
+                        <div class="armor-bar hidden" id="armor-bar"><div class="armor-fill" id="armor-fill"></div></div>
+                        <span class="armor-pct hidden" id="armor-pct"></span>
+                    </div>
+                    <div id="give-drop" class="give-drop" data-slot="give">
+                        <div class="give-icon"><i class="fa-solid fa-hand-holding-hand"></i></div>
+                        <span class="give-label">Donner</span>
+                    </div>
+                    <div class="info-slot" id="slot-phone" data-slot="40" data-drop-target="40" data-item-name="phone">
+                        <i class="fa-solid fa-mobile-screen info-slot-icon" id="phone-icon"></i>
+                        <span class="info-slot-label" id="phone-label">Téléphone</span>
+                    </div>
+                    <div class="info-slot" id="slot-radio" data-slot="41" data-drop-target="41" data-item-name="radio">
+                        <i class="fa-solid fa-tower-broadcast info-slot-icon" id="radio-icon"></i>
+                        <span class="info-slot-label" id="radio-label">Radio</span>
+                    </div>
+                </div>
+
+                <!-- ===== BARRE DE RACCOURCIS (hotbar 1-5) ===== -->
+                <div class="hotbar-wrapper">
+                    <div class="hotbar" id="hotbar">
+                        <div class="hotbar-slot" data-key="1"><span class="hotbar-num">1</span></div>
+                        <div class="hotbar-slot" data-key="2"><span class="hotbar-num">2</span></div>
+                        <div class="hotbar-slot" data-key="3"><span class="hotbar-num">3</span></div>
+                        <div class="hotbar-slot" data-key="4"><span class="hotbar-num">4</span></div>
+                        <div class="hotbar-slot" data-key="5"><span class="hotbar-num">5</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== SOL (droite) ===== -->
+            <section class="panel ground-panel">
+                <header class="panel-head">
+                    <div class="head-left">
+                        <div class="head-icon"><i class="fa-solid fa-box-open"></i></div>
+                        <span class="panel-title">Sol</span>
+                    </div>
+                    <span id="ground-weight-text" class="weight-text">0 / 9999 kg</span>
+                </header>
+                <div class="search-row">
+                    <input id="ground-search" class="search-input" type="text" placeholder="Rechercher" spellcheck="false">
+                    <i class="fa-solid fa-magnifying-glass search-ico"></i>
+                </div>
+                <div id="ground-grid" class="grid">
+                    <!-- Les cases des items au sol seront générées ici par le JS -->
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ===== ZONE NOTIFICATIONS ===== -->
+        <div class="footer-container">
+            <div class="tips-box">
+                <p>Interface lente: cochez la case 'NUI in-process GPU' dans les paramètres du launcher FiveM</p>
+                <p>Souris bloquée: changez la méthode d'entrée dans les paramètres du jeu, catégorie clavier/souris</p>
+            </div>
+        </div>
+
+        <!-- Infobulle item -->
+        <div id="tooltip" class="tooltip hidden">
+            <div id="tt-name" class="tt-name"></div>
+            <div id="tt-desc" class="tt-desc"></div>
+            <div id="tt-weight" class="tt-weight"></div>
+        </div>
+
+        <!-- FIX JS : Éléments cachés -->
+        <div id="weight-fill" style="display: none;"></div>
+        <div id="ground-weight-fill" style="display: none;"></div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
