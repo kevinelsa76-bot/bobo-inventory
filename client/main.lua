@@ -455,7 +455,9 @@ RegisterNUICallback('stripMask', function(_, cb)
 
     SetPedComponentVariation(ped, 1, nakedDrawable, 0, 0)
     Notify(Config.Lang.maskOff, 'primary')
-end) function(_, cb)
+end)
+
+RegisterNUICallback('restoreMask', function(_, cb)
     local ped         = PlayerPedId()
     local maskToApply = savedMask
     savedMask         = nil
@@ -472,7 +474,9 @@ end) function(_, cb)
         end)
     end
     Notify(Config.Lang.maskOn, 'success')
-end) function()
+end)
+
+RegisterNetEvent('bobo-inventory:client:syncArmorOnOpen', function()
     local ped   = PlayerPedId()
     local armor = armorEquipped and GetPedArmour(ped) or 0
     SendNUIMessage({ action = 'armor', value = armor })
